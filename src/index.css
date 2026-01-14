@@ -28,6 +28,17 @@
   --vinyl-label: #d4af37;
   --vinyl-label-dark: #a67c00;
 
+  /* Estados del tocadiscos */
+  --vinyl-stopped-primary: #dc2626;
+  --vinyl-stopped-secondary: #b91c1c;
+  --vinyl-stopped-glow: #fca5a5;
+  --vinyl-stopped-dark: #991b1b;
+
+  --vinyl-playing-primary: #16a34a;
+  --vinyl-playing-secondary: #15803d;
+  --vinyl-playing-glow: #86efac;
+  --vinyl-playing-dark: #166534;
+
   /* Madera - Tonos cálidos y ricos */
   --wood-dark: #2d1f1a;
   --wood-mid: #4a3426;
