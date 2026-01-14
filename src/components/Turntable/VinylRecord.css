@@ -1,0 +1,246 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes vinyl-shimmer {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.vinyl-record {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 35% 35%,
+      rgba(40, 40, 40, 0.4) 0%,
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at center,
+      #000000 0%,
+      #0a0a0a 30%,
+      #000000 100%
+    );
+  position: relative;
+  box-shadow:
+    inset 0 -10px 30px rgba(0, 0, 0, 0.9),
+    inset 0 10px 20px rgba(80, 80, 80, 0.15),
+    0 15px 40px rgba(0, 0, 0, 0.8),
+    0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.vinyl-record.playing {
+  animation: spin 3s linear infinite;
+}
+
+.vinyl-record.paused {
+  animation: spin 3s linear infinite;
+  animation-play-state: paused;
+}
+
+/* Borde exterior del vinilo */
+.vinyl-record::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid rgba(30, 30, 30, 0.8);
+  box-shadow:
+    inset 0 0 10px rgba(0, 0, 0, 0.8),
+    0 0 3px rgba(100, 100, 100, 0.3);
+  pointer-events: none;
+}
+
+/* Reflejos en el vinilo */
+.vinyl-record::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 15%;
+  width: 40%;
+  height: 25%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 50%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  transform: rotate(-25deg);
+  pointer-events: none;
+  animation: vinyl-shimmer 3s ease-in-out infinite;
+}
+
+/* Surcos del vinilo - Mucho más detallados */
+.vinyl-grooves {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(
+      circle at center,
+      transparent 0px,
+      transparent 1.5px,
+      rgba(255, 255, 255, 0.015) 1.5px,
+      rgba(255, 255, 255, 0.015) 2px
+    ),
+    repeating-radial-gradient(
+      circle at 52% 48%,
+      transparent 0px,
+      transparent 3px,
+      rgba(255, 255, 255, 0.008) 3px,
+      rgba(255, 255, 255, 0.008) 4px
+    );
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* Etiqueta central - Diseño dorado refinado */
+.vinyl-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35%;
+  height: 35%;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 40% 40%,
+      var(--accent-glow) 0%,
+      var(--accent-primary) 25%,
+      var(--accent-secondary) 60%,
+      var(--vinyl-label-dark) 100%
+    );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 25px rgba(212, 175, 55, 0.5),
+    inset 0 3px 15px rgba(0, 0, 0, 0.4),
+    inset 0 -3px 10px rgba(255, 221, 136, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 221, 136, 0.4);
+  position: relative;
+}
+
+/* Textura sutil en la etiqueta */
+.vinyl-label::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(0, 0, 0, 0.02) 1deg,
+      transparent 2deg
+    );
+  pointer-events: none;
+}
+
+/* Brillo en la etiqueta */
+.vinyl-label::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  width: 35%;
+  height: 35%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  transform: rotate(-35deg);
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.label-content {
+  text-align: center;
+  padding: 1rem;
+  max-width: 90%;
+  position: relative;
+  z-index: 1;
+}
+
+.label-title {
+  font-size: clamp(0.7rem, 1.5vw, 1rem);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--primary-bg);
+  margin-bottom: 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.3),
+    0 -1px 1px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.03em;
+}
+
+.label-subtitle {
+  font-size: clamp(0.6rem, 1.2vw, 0.8rem);
+  font-family: 'Space Grotesk', sans-serif;
+  color: rgba(10, 10, 15, 0.8);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Agujero central */
+.center-hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8%;
+  height: 8%;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      #1a1a1a 0%,
+      #000000 50%,
+      #000000 100%
+    );
+  box-shadow:
+    inset 0 0 15px rgba(0, 0, 0, 0.95),
+    inset 0 2px 5px rgba(0, 0, 0, 0.8),
+    0 0 8px rgba(0, 0, 0, 0.7);
+  border: 1px solid #000000;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .vinyl-label {
+    width: 40%;
+    height: 40%;
+  }
+
+  .label-title {
+    -webkit-line-clamp: 1;
+  }
+}

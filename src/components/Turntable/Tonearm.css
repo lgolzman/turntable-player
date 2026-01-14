@@ -1,0 +1,241 @@
+@keyframes needle-vibration {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(0.5px);
+  }
+}
+
+@keyframes chrome-shine {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.tonearm {
+  position: absolute;
+  top: 15%;
+  right: 10%;
+  width: 40%;
+  height: 40%;
+  transform-origin: 85% 15%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+}
+
+/* Base del brazo - Metal cromado con reflejos */
+.tonearm-base {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background:
+    radial-gradient(
+      circle at 35% 35%,
+      var(--metal-highlight) 0%,
+      var(--metal-chrome) 30%,
+      var(--metal-dark) 70%,
+      #404050 100%
+    );
+  border-radius: 50%;
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    0 0 0 2px rgba(96, 96, 112, 0.5);
+  position: relative;
+}
+
+/* Reflejo en la base */
+.tonearm-base::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 25%;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.6) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: chrome-shine 2s ease-in-out infinite;
+}
+
+/* Brazo principal - Metal pulido */
+.tonearm-arm {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 90%;
+  height: 7px;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--metal-highlight) 0%,
+      var(--metal-chrome) 20%,
+      var(--metal-dark) 50%,
+      #505060 80%,
+      var(--metal-dark) 100%
+    );
+  transform-origin: right center;
+  border-radius: 4px;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* Línea de luz en el brazo */
+.tonearm-arm::before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 20%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.5) 80%,
+    transparent 100%
+  );
+  border-radius: 50%;
+}
+
+/* Headshell - Cabezal de lectura */
+.tonearm-headshell {
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 14px;
+  background:
+    linear-gradient(
+      to right,
+      var(--metal-chrome) 0%,
+      var(--metal-dark) 50%,
+      #404050 100%
+    );
+  border-radius: 3px;
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* Detalles del headshell */
+.tonearm-headshell::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(
+    circle at center,
+    var(--accent-primary) 0%,
+    var(--accent-secondary) 100%
+  );
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 4px var(--accent-primary);
+}
+
+/* Aguja - Con efecto dorado cuando está reproduciendo */
+.tonearm-needle {
+  position: absolute;
+  left: 2px;
+  bottom: -10px;
+  width: 2.5px;
+  height: 14px;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--metal-dark) 0%,
+      #303040 30%,
+      #202030 70%,
+      #101015 100%
+    );
+  border-radius: 1.5px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+/* Punta de la aguja */
+.tonearm-needle::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+  border-top: 3px solid #101015;
+}
+
+/* Brillo dorado cuando está reproduciendo */
+.tonearm.playing .tonearm-needle {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    0 0 8px rgba(212, 175, 55, 0.6),
+    0 0 4px var(--accent-primary);
+  animation: needle-vibration 0.1s ease-in-out infinite;
+}
+
+.tonearm.playing .tonearm-needle::after {
+  border-top-color: var(--accent-secondary);
+  filter: drop-shadow(0 0 2px var(--accent-primary));
+}
+
+/* Efecto hover suave en todo el brazo */
+.tonearm.resting {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+}
+
+.tonearm.playing {
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.7));
+}
+
+@media (max-width: 768px) {
+  .tonearm {
+    width: 35%;
+    height: 35%;
+  }
+
+  .tonearm-base {
+    width: 20px;
+    height: 20px;
+  }
+
+  .tonearm-arm {
+    height: 6px;
+  }
+
+  .tonearm-headshell {
+    width: 28px;
+    height: 12px;
+  }
+
+  .tonearm-needle {
+    height: 12px;
+  }
+}
