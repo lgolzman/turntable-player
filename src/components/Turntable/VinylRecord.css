@@ -109,7 +109,7 @@
   opacity: 0.8;
 }
 
-/* Etiqueta central - Diseño dorado refinado */
+/* Etiqueta central - Cambia de color según el estado */
 .vinyl-label {
   position: absolute;
   top: 50%;
@@ -118,24 +118,47 @@
   width: 35%;
   height: 35%;
   border-radius: 50%;
-  background:
-    radial-gradient(
-      circle at 40% 40%,
-      var(--accent-glow) 0%,
-      var(--accent-primary) 25%,
-      var(--accent-secondary) 60%,
-      var(--vinyl-label-dark) 100%
-    );
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    0 0 25px rgba(212, 175, 55, 0.5),
-    inset 0 3px 15px rgba(0, 0, 0, 0.4),
-    inset 0 -3px 10px rgba(255, 221, 136, 0.3),
-    0 2px 8px rgba(0, 0, 0, 0.6);
-  border: 2px solid rgba(255, 221, 136, 0.4);
   position: relative;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Etiqueta cuando está parado (ROJO) */
+.vinyl-record.paused .vinyl-label {
+  background:
+    radial-gradient(
+      circle at 40% 40%,
+      var(--vinyl-stopped-glow) 0%,
+      var(--vinyl-stopped-primary) 25%,
+      var(--vinyl-stopped-secondary) 60%,
+      var(--vinyl-stopped-dark) 100%
+    );
+  box-shadow:
+    0 0 25px rgba(220, 38, 38, 0.6),
+    inset 0 3px 15px rgba(0, 0, 0, 0.4),
+    inset 0 -3px 10px rgba(252, 165, 165, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(252, 165, 165, 0.5);
+}
+
+/* Etiqueta cuando está reproduciendo (VERDE) */
+.vinyl-record.playing .vinyl-label {
+  background:
+    radial-gradient(
+      circle at 40% 40%,
+      var(--vinyl-playing-glow) 0%,
+      var(--vinyl-playing-primary) 25%,
+      var(--vinyl-playing-secondary) 60%,
+      var(--vinyl-playing-dark) 100%
+    );
+  box-shadow:
+    0 0 25px rgba(22, 163, 74, 0.6),
+    inset 0 3px 15px rgba(0, 0, 0, 0.4),
+    inset 0 -3px 10px rgba(134, 239, 172, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(134, 239, 172, 0.5);
 }
 
 /* Textura sutil en la etiqueta */
