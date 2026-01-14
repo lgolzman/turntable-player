@@ -17,6 +17,8 @@ export const AudioProvider = ({ children }) => {
   const [volume, setVolume] = useState(0.7);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isShuffle, setIsShuffle] = useState(false);
+  const [shuffledIndices, setShuffledIndices] = useState([]);
 
   const audioRef = useRef(new Audio());
 
@@ -140,7 +142,17 @@ export const AudioProvider = ({ children }) => {
   const nextTrack = () => {
     if (playlist.length === 0) return;
 
-    const nextIndex = (currentTrackIndex + 1) % playlist.length;
+    let nextIndex;
+    if (isShuffle && shuffledIndices.length > 0) {
+      // Modo shuffle: encontrar la posición actual en la lista shuffled
+      const currentShuffledPosition = shuffledIndices.indexOf(currentTrackIndex);
+      const nextShuffledPosition = (currentShuffledPosition + 1) % shuffledIndices.length;
+      nextIndex = shuffledIndices[nextShuffledPosition];
+    } else {
+      // Modo normal: siguiente en orden
+      nextIndex = (currentTrackIndex + 1) % playlist.length;
+    }
+
     loadTrack(nextIndex);
 
     if (isPlaying) {
@@ -156,7 +168,19 @@ export const AudioProvider = ({ children }) => {
   const previousTrack = () => {
     if (playlist.length === 0) return;
 
-    const prevIndex = currentTrackIndex - 1 < 0 ? playlist.length - 1 : currentTrackIndex - 1;
+    let prevIndex;
+    if (isShuffle && shuffledIndices.length > 0) {
+      // Modo shuffle: encontrar la posición anterior en la lista shuffled
+      const currentShuffledPosition = shuffledIndices.indexOf(currentTrackIndex);
+      const prevShuffledPosition = currentShuffledPosition - 1 < 0
+        ? shuffledIndices.length - 1
+        : currentShuffledPosition - 1;
+      prevIndex = shuffledIndices[prevShuffledPosition];
+    } else {
+      // Modo normal: anterior en orden
+      prevIndex = currentTrackIndex - 1 < 0 ? playlist.length - 1 : currentTrackIndex - 1;
+    }
+
     loadTrack(prevIndex);
 
     if (isPlaying) {
@@ -180,6 +204,36 @@ export const AudioProvider = ({ children }) => {
     setVolume(normalizedLevel);
   };
 
+  // Generar índices aleatorios para shuffle
+  const generateShuffledIndices = (playlistLength, currentIndex) => {
+    const indices = Array.from({ length: playlistLength }, (_, i) => i);
+
+    // Fisher-Yates shuffle
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+
+    // Mover el índice actual al principio
+    const currentIndexPosition = indices.indexOf(currentIndex);
+    if (currentIndexPosition !== -1) {
+      indices.splice(currentIndexPosition, 1);
+      indices.unshift(currentIndex);
+    }
+
+    return indices;
+  };
+
+  // Toggle shuffle
+  const toggleShuffle = () => {
+    if (!isShuffle && playlist.length > 0) {
+      // Activar shuffle: generar nueva lista shuffled
+      const newShuffled = generateShuffledIndices(playlist.length, currentTrackIndex);
+      setShuffledIndices(newShuffled);
+    }
+    setIsShuffle(!isShuffle);
+  };
+
   const value = {
     playlist,
     currentTrack: playlist[currentTrackIndex] || null,
@@ -188,6 +242,7 @@ export const AudioProvider = ({ children }) => {
     volume,
     currentTime,
     duration,
+    isShuffle,
     addTracksToPlaylist,
     removeTrack,
     playTrack,
@@ -196,6 +251,7 @@ export const AudioProvider = ({ children }) => {
     previousTrack,
     seekTo,
     setVolumeLevel,
+    toggleShuffle,
   };
 
   return (
