@@ -1,462 +1,206 @@
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow:
-      0 6px 20px rgba(212, 175, 55, 0.4),
-      inset 0 2px 8px rgba(255, 221, 136, 0.3),
-      inset 0 -2px 8px rgba(0, 0, 0, 0.4);
-  }
-  50% {
-    box-shadow:
-      0 8px 30px rgba(212, 175, 55, 0.6),
-      inset 0 2px 8px rgba(255, 221, 136, 0.4),
-      inset 0 -2px 8px rgba(0, 0, 0, 0.3);
-  }
-}
-
-@keyframes shimmer-slide {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(200%);
-  }
-}
-
 .controls-container {
-  background:
-    linear-gradient(135deg, rgba(37, 37, 53, 0.9) 0%, rgba(26, 26, 36, 0.95) 100%);
-  border-radius: 16px;
-  padding: 2rem;
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 0 0 1px rgba(212, 175, 55, 0.15);
-  position: relative;
-  overflow: hidden;
+  gap: 1.5rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--tertiary-bg);
 }
 
-.controls-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(212, 175, 55, 0.3) 50%,
-    transparent 100%
-  );
-}
-
-/* Play/Pause Button - Botón dorado refinado */
+/* Play/Pause Button */
 .play-pause-button {
-  width: 90px;
-  height: 90px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
-  background:
-    radial-gradient(
-      circle at 40% 40%,
-      var(--accent-glow) 0%,
-      var(--accent-primary) 30%,
-      var(--accent-secondary) 70%,
-      var(--vinyl-label-dark) 100%
-    );
-  color: var(--primary-bg);
+  background: var(--accent-primary);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    0 6px 20px rgba(212, 175, 55, 0.5),
-    inset 0 2px 8px rgba(255, 221, 136, 0.3),
-    inset 0 -2px 8px rgba(0, 0, 0, 0.4),
-    0 0 0 3px rgba(212, 175, 55, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.play-pause-button::before {
-  content: '';
-  position: absolute;
-  top: 20%;
-  left: 25%;
-  width: 40%;
-  height: 40%;
-  background: radial-gradient(
-    circle at center,
-    rgba(255, 255, 255, 0.4) 0%,
-    transparent 70%
-  );
-  border-radius: 50%;
-  filter: blur(4px);
-}
-
-.play-pause-button::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 50%;
-  height: 200%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.2) 50%,
-    transparent 100%
-  );
-  animation: shimmer-slide 3s infinite;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .play-pause-button:hover:not(:disabled) {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow:
-    0 10px 30px rgba(212, 175, 55, 0.7),
-    inset 0 2px 8px rgba(255, 221, 136, 0.4),
-    inset 0 -2px 8px rgba(0, 0, 0, 0.3),
-    0 0 0 3px rgba(212, 175, 55, 0.3),
-    0 0 20px rgba(212, 175, 55, 0.4);
+  background: var(--accent-secondary);
+  transform: scale(1.05);
 }
 
 .play-pause-button:active:not(:disabled) {
-  transform: translateY(-1px) scale(0.98);
-  box-shadow:
-    0 4px 15px rgba(212, 175, 55, 0.6),
-    inset 0 2px 8px rgba(255, 221, 136, 0.2),
-    inset 0 -2px 8px rgba(0, 0, 0, 0.5);
+  transform: scale(0.98);
 }
 
 .play-pause-button:disabled {
   opacity: 0.3;
   cursor: not-allowed;
-  filter: grayscale(0.5);
 }
 
-.play-pause-button svg {
-  position: relative;
-  z-index: 1;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-}
-
-/* Progress Bar - Barra elegante */
+/* Progress Bar */
 .progress-bar-container {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .time-display {
-  font-size: 0.875rem;
-  font-family: 'Orbitron', monospace;
-  color: var(--text-gold);
+  font-size: 0.8rem;
   font-variant-numeric: tabular-nums;
-  min-width: 48px;
-  text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+  color: var(--text-secondary);
+  min-width: 42px;
   font-weight: 500;
 }
 
 .progress-bar {
   flex: 1;
-  height: 10px;
-  background:
-    linear-gradient(to bottom, rgba(10, 10, 15, 0.8), rgba(20, 20, 30, 0.9));
-  border-radius: 6px;
+  height: 6px;
+  background: var(--tertiary-bg);
+  border-radius: 3px;
   cursor: pointer;
   position: relative;
   overflow: visible;
-  box-shadow:
-    inset 0 2px 6px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(212, 175, 55, 0.2);
 }
 
 .progress-fill {
   height: 100%;
-  background:
-    linear-gradient(
-      90deg,
-      var(--accent-secondary) 0%,
-      var(--accent-primary) 50%,
-      var(--accent-glow) 100%
-    );
-  border-radius: 6px;
+  background: var(--accent-primary);
+  border-radius: 3px;
   position: relative;
   transition: width 0.1s linear;
-  box-shadow:
-    0 0 12px rgba(212, 175, 55, 0.5),
-    inset 0 1px 2px rgba(255, 221, 136, 0.4);
 }
 
 .progress-thumb {
   position: absolute;
-  right: -8px;
+  right: -6px;
   top: 50%;
   transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  background:
-    radial-gradient(
-      circle at 40% 40%,
-      var(--accent-glow) 0%,
-      var(--accent-primary) 50%,
-      var(--accent-secondary) 100%
-    );
+  width: 14px;
+  height: 14px;
+  background: var(--accent-primary);
   border-radius: 50%;
-  box-shadow:
-    0 2px 8px rgba(212, 175, 55, 0.6),
-    inset 0 1px 2px rgba(255, 255, 255, 0.4),
-    0 0 12px rgba(212, 175, 55, 0.4);
+  box-shadow: var(--shadow-sm);
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.2s ease;
-  border: 2px solid rgba(255, 221, 136, 0.3);
+  transition: opacity 0.2s ease;
+  border: 2px solid white;
 }
 
 .progress-bar:hover .progress-thumb {
   opacity: 1;
 }
 
-.progress-thumb:hover {
-  transform: translateY(-50%) scale(1.2);
-}
-
-/* Volume Control - Control refinado */
+/* Volume Control */
 .volume-control {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 0;
+  gap: 0.75rem;
 }
 
 .volume-icon {
-  color: var(--text-gold);
+  color: var(--text-secondary);
   flex-shrink: 0;
-  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.3));
-  transition: all 0.3s ease;
-}
-
-.volume-control:hover .volume-icon {
-  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
-  transform: scale(1.1);
 }
 
 .volume-slider {
   flex: 1;
-  height: 8px;
-  border-radius: 4px;
-  background:
-    linear-gradient(to bottom, rgba(10, 10, 15, 0.8), rgba(20, 20, 30, 0.9));
+  height: 6px;
+  border-radius: 3px;
+  background: var(--tertiary-bg);
   outline: none;
   -webkit-appearance: none;
   appearance: none;
-  box-shadow:
-    inset 0 2px 6px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(212, 175, 55, 0.2);
 }
 
 .volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background:
-    radial-gradient(
-      circle at 40% 40%,
-      var(--accent-glow) 0%,
-      var(--accent-primary) 50%,
-      var(--accent-secondary) 100%
-    );
+  background: var(--accent-primary);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    0 2px 8px rgba(212, 175, 55, 0.6),
-    inset 0 1px 2px rgba(255, 255, 255, 0.4),
-    0 0 12px rgba(212, 175, 55, 0.4);
-  border: 2px solid rgba(255, 221, 136, 0.3);
-}
-
-.volume-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow:
-    0 3px 12px rgba(212, 175, 55, 0.8),
-    inset 0 1px 2px rgba(255, 255, 255, 0.5),
-    0 0 16px rgba(212, 175, 55, 0.6);
+  border: 2px solid white;
+  box-shadow: var(--shadow-sm);
 }
 
 .volume-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background:
-    radial-gradient(
-      circle at 40% 40%,
-      var(--accent-glow) 0%,
-      var(--accent-primary) 50%,
-      var(--accent-secondary) 100%
-    );
+  background: var(--accent-primary);
   cursor: pointer;
-  border: 2px solid rgba(255, 221, 136, 0.3);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    0 2px 8px rgba(212, 175, 55, 0.6),
-    inset 0 1px 2px rgba(255, 255, 255, 0.4),
-    0 0 12px rgba(212, 175, 55, 0.4);
-}
-
-.volume-slider::-moz-range-thumb:hover {
-  transform: scale(1.2);
+  border: 2px solid white;
+  box-shadow: var(--shadow-sm);
 }
 
 .volume-percentage {
-  font-size: 0.875rem;
-  font-family: 'Orbitron', monospace;
-  color: var(--text-gold);
-  min-width: 42px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  min-width: 36px;
   text-align: right;
   font-variant-numeric: tabular-nums;
   font-weight: 500;
-  text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
 }
 
-/* Playlist Controls - Botones de navegación */
+/* Playlist Controls */
 .playlist-controls {
   display: flex;
   justify-content: center;
-  gap: 2.5rem;
+  gap: 1.5rem;
   align-items: center;
 }
 
 .control-button {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background:
-    linear-gradient(135deg, rgba(37, 37, 53, 0.8), rgba(45, 45, 60, 0.9));
-  color: var(--text-gold);
+  background: var(--secondary-bg);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    0 3px 10px rgba(0, 0, 0, 0.5),
-    inset 0 1px 2px rgba(255, 255, 255, 0.1),
-    0 0 0 1px rgba(212, 175, 55, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.control-button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 0%,
-    rgba(212, 175, 55, 0.1) 0%,
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.control-button:hover:not(:disabled)::before {
-  opacity: 1;
+  transition: all 0.2s ease;
+  border: 1px solid var(--tertiary-bg);
 }
 
 .control-button:hover:not(:disabled) {
-  background:
-    linear-gradient(135deg, rgba(45, 45, 60, 0.9), rgba(55, 55, 75, 0.95));
-  transform: translateY(-2px) scale(1.05);
-  box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.6),
-    inset 0 1px 2px rgba(255, 255, 255, 0.15),
-    0 0 0 1px rgba(212, 175, 55, 0.3),
-    0 0 16px rgba(212, 175, 55, 0.2);
-  color: var(--accent-glow);
-}
-
-.control-button:active:not(:disabled) {
-  transform: translateY(0) scale(0.98);
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.6),
-    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  background: var(--tertiary-bg);
 }
 
 .control-button:disabled {
-  opacity: 0.2;
+  opacity: 0.3;
   cursor: not-allowed;
-  filter: grayscale(0.8);
 }
 
-.control-button svg {
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-}
-
-/* Shuffle Button - Estado activo */
+/* Shuffle Button Active */
 .shuffle-button.active {
-  background:
-    radial-gradient(
-      circle at 40% 40%,
-      var(--accent-glow) 0%,
-      var(--accent-primary) 40%,
-      var(--accent-secondary) 80%,
-      rgba(45, 45, 60, 0.9) 100%
-    );
-  color: var(--primary-bg);
-  box-shadow:
-    0 4px 16px rgba(212, 175, 55, 0.6),
-    inset 0 1px 3px rgba(255, 221, 136, 0.4),
-    0 0 0 2px rgba(212, 175, 55, 0.4),
-    0 0 20px rgba(212, 175, 55, 0.3);
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.shuffle-button.active svg {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
 }
 
 .shuffle-button.active:hover:not(:disabled) {
-  background:
-    radial-gradient(
-      circle at 40% 40%,
-      var(--accent-glow) 0%,
-      var(--accent-primary) 35%,
-      var(--accent-secondary) 75%,
-      rgba(55, 55, 75, 0.95) 100%
-    );
-  box-shadow:
-    0 6px 20px rgba(212, 175, 55, 0.7),
-    inset 0 1px 3px rgba(255, 221, 136, 0.5),
-    0 0 0 2px rgba(212, 175, 55, 0.5),
-    0 0 24px rgba(212, 175, 55, 0.4);
+  background: var(--accent-secondary);
 }
 
 @media (max-width: 768px) {
   .controls-container {
-    padding: 1.5rem;
-    gap: 1.5rem;
+    padding: 1.25rem;
+    gap: 1.25rem;
   }
 
   .play-pause-button {
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
   }
 
   .control-button {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 
   .playlist-controls {
-    gap: 2rem;
-  }
-
-  .time-display,
-  .volume-percentage {
-    min-width: 40px;
+    gap: 1.25rem;
   }
 }
